@@ -1,6 +1,6 @@
-# Deployment (future – nothing has been deployed)
+# Deployment
 
-The project has been built and tested **locally only**. No repository, remote, GitHub Pages site, DNS change, CI/CD pipeline or secret has been created.
+**Current state (2026-11-16):** public repository https://github.com/samijturunen01/valolux-demo. Every push to `main` deploys the demo preview to https://samijturunen01.github.io/valolux-demo/ via `.github/workflows/pages.yml` (sub-path build, indexing OFF, demo notices and mock form adapter still active). No custom domain, DNS change or secret has been set up.
 
 ## What the build already does for static hosting
 
@@ -24,7 +24,7 @@ The sub-path build (`BASE_PATH=/valolux/`) was tested locally against a server t
 
 Requires Node ≥ 22.18, because the build scripts import small `.ts` data modules directly.
 
-## Steps for a future preview on GitHub Pages (when authorised)
+## Demo preview on GitHub Pages (done)
 
 1. Create a **private** repository and push the project (`dist/` and `node_modules/` are git-ignored).
 2. Add a workflow that runs `npm ci && BASE_PATH=/<repo>/ npm run build` and publishes `dist/` with `actions/upload-pages-artifact` + `actions/deploy-pages`.
