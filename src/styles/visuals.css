@@ -1,0 +1,114 @@
+/* ============================================================
+   Service visuals – custom SVG/canvas light objects.
+   Root element gets .is-lit; children marked .on / .off fade,
+   .flicker plays a power-up sequence each time it lights.
+   ============================================================ */
+
+.vis {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.vis .on {
+  opacity: 0;
+  transition: opacity 0.8s var(--ease-light);
+}
+.vis.is-lit .on {
+  opacity: 1;
+}
+.vis .off {
+  transition: opacity 0.5s var(--ease-light);
+}
+.vis.is-lit .off {
+  opacity: 0;
+}
+.vis.is-lit .flicker {
+  animation: flicker-on 0.95s linear both;
+  animation-delay: calc(var(--fd, 0) * 1ms);
+}
+.vis .fill-t {
+  transition: fill 0.6s var(--ease-light);
+}
+
+/* Light box */
+.vis-lightbox .lb-text {
+  fill: #23262d;
+}
+.vis-lightbox.is-lit .lb-text {
+  fill: #13213d;
+}
+
+/* Pylon panels light top → bottom */
+.vis-pylon .panel-lit {
+  transition-delay: calc(var(--p, 0) * 140ms);
+}
+
+/* Window film squeegee reveal */
+.vis-film .film-reveal {
+  transform-box: fill-box;
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  transition: transform 1.3s var(--ease-expo);
+}
+.vis-film.is-lit .film-reveal {
+  transform: scaleX(1);
+}
+.vis-film .squeegee {
+  transform: translateX(0);
+  opacity: 0;
+  transition:
+    transform 1.3s var(--ease-expo),
+    opacity 0.3s 1s;
+}
+.vis-film.is-lit .squeegee {
+  transform: translateX(var(--sq, 280px));
+  opacity: 0;
+  animation: squeegee-glow 1.3s var(--ease-expo) both;
+}
+@keyframes squeegee-glow {
+  0% {
+    opacity: 0;
+  }
+  10%,
+  70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Fluorescent tube: dying ends glow faintly until serviced */
+.vis-tube .tube-ends {
+  animation: ends-glow 3.6s ease-in-out infinite;
+}
+.vis-tube.is-lit .tube-ends {
+  animation: none;
+  opacity: 0;
+}
+@keyframes ends-glow {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 0.85;
+  }
+}
+
+/* LED matrix housing */
+.led-matrix {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.led-matrix canvas {
+  width: 100%;
+  height: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vis-tube .tube-ends {
+    animation: none;
+  }
+}
